@@ -1,0 +1,84 @@
+watchdog: BUG: soft lockup - CPU#0 stuck for 22s! [syz-executor.1:21105]
+Modules linked in:
+CPU: 0 PID: 21105 Comm: syz-executor.1 Not tainted 5.13.19+ #3
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.13.0-1ubuntu1.1 04/01/2014
+RIP: 0010:aa_free_task_ctx security/apparmor/include/task.h:45 [inline]
+RIP: 0010:apparmor_task_free+0x6e/0x250 security/apparmor/lsm.c:103
+Code: c0 13 00 00 0f 84 3e 01 00 00 e8 4d 50 4b ff 48 89 da 48 b8 00 00 00 00 00 fc ff df 48 c1 ea 03 80 3c 02 00 0f 85 c7 01 00 00 <4c> 8b 23 4d 85 e4 74 44 e8 25 50 4b ff be 04 00 00 00 4c 89 e7 41
+RSP: 0018:ffff88805b609da0 EFLAGS: 00010246
+RAX: dffffc0000000000 RBX: ffff888001d4b784 RCX: ffffffff873eb873
+RDX: 1ffff110003a96f0 RSI: 0000000000000100 RDI: ffff8880058a3440
+RBP: ffff88805b609db8 R08: 0000000000000001 R09: ffff8880058a2ee8
+R10: 0000000000000003 R11: ffffed100b6c13aa R12: ffff8880058a2080
+R13: ffff8880058a2080 R14: ffff8880058a20a8 R15: ffff888006a70000
+FS:  00007ff7641f9700(0000) GS:ffff88805b600000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 00007f5f4cee2170 CR3: 000000000689c004 CR4: 0000000000770ef0
+DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+PKRU: 55555554
+Call Trace:
+ <IRQ>
+ security_task_free+0x4c/0xf0 security/security.c:1853
+ __put_task_struct+0x12b/0x520 kernel/fork.c:745
+ put_task_struct include/linux/sched/task.h:114 [inline]
+ delayed_put_task_struct+0x135/0x180 kernel/exit.c:173
+ rcu_do_batch kernel/rcu/tree.c:2559 [inline]
+ rcu_core+0x536/0x12f0 kernel/rcu/tree.c:2794
+ rcu_core_si+0xe/0x10 kernel/rcu/tree.c:2807
+ __do_softirq+0x187/0x576 kernel/softirq.c:559
+ invoke_softirq kernel/softirq.c:433 [inline]
+ __irq_exit_rcu kernel/softirq.c:637 [inline]
+ irq_exit_rcu+0x120/0x150 kernel/softirq.c:649
+ sysvec_apic_timer_interrupt+0x79/0x90 arch/x86/kernel/apic/apic.c:1100
+ </IRQ>
+ <TASK>
+ asm_sysvec_apic_timer_interrupt+0x12/0x20 arch/x86/include/asm/idtentry.h:638
+RIP: 0010:get_current arch/x86/include/asm/current.h:15 [inline]
+RIP: 0010:finish_task_switch+0x1a4/0x730 kernel/sched/core.c:4240
+Code: 48 c7 03 00 00 00 00 48 89 45 c8 ff d1 0f 1f 00 48 8b 45 c8 48 85 c0 75 b2 4c 89 e7 e8 89 93 0a 00 66 90 fb 66 0f 1f 44 00 00 <65> 48 8b 1c 25 c0 fb 02 00 48 8d bb 48 13 00 00 48 b8 00 00 00 00
+RSP: 0018:ffff88800804fb88 EFLAGS: 00000246
+RAX: 0000000000000001 RBX: 0000000000000000 RCX: ffffffff86ae1ad3
+RDX: 1ffff1100b6c8b4a RSI: 0000000000000000 RDI: ffff88805b644fc0
+RBP: ffff88800804fbc8 R08: 0000000000000001 R09: fffffbfff1526d1f
+R10: ffffffff8a9368f3 R11: fffffbfff1526d1e R12: ffff88805b644fc0
+R13: ffff888001314100 R14: ffff8880047faac0 R15: ffff88805b6459d0
+ context_switch kernel/sched/core.c:4370 [inline]
+ __schedule+0x8f5/0x1f00 kernel/sched/core.c:5175
+ preempt_schedule_common+0x2e/0x60 kernel/sched/core.c:5335
+ __cond_resched+0x22/0x30 kernel/sched/core.c:6998
+ mutex_lock+0x6c/0xe0 kernel/locking/mutex.c:281
+ __do_sys_perf_event_open+0x1815/0x25c0 kernel/events/core.c:12480
+ __se_sys_perf_event_open kernel/events/core.c:12048 [inline]
+ __x64_sys_perf_event_open+0xbe/0x150 kernel/events/core.c:12048
+ do_syscall_64+0x40/0xb0 arch/x86/entry/common.c:47
+ entry_SYSCALL_64_after_hwframe+0x44/0xae
+RIP: 0033:0x7ff76508687d
+Code: 02 b8 ff ff ff ff c3 66 0f 1f 44 00 00 f3 0f 1e fa 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 b8 ff ff ff f7 d8 64 89 01 48
+RSP: 002b:00007ff7641f8bf8 EFLAGS: 00000246 ORIG_RAX: 000000000000012a
+RAX: ffffffffffffffda RBX: 00007ff7651a5f60 RCX: 00007ff76508687d
+RDX: 0000000000000000 RSI: 0000000000000000 RDI: 0000000020000080
+RBP: 00007ff7650f30c9 R08: 0000000000000000 R09: 0000000000000000
+R10: ffffffffffffffff R11: 0000000000000246 R12: 0000000000000000
+R13: 00007fff674ced3f R14: 00007fff674ceee0 R15: 00007ff7641f8d80
+ </TASK>
+Sending NMI from CPU 0 to CPUs 1:
+NMI backtrace for cpu 1 skipped: idling at native_safe_halt+0xe/0x10 arch/x86/include/asm/irqflags.h:51
+----------------
+Code disassembly (best guess), 2 bytes skipped:
+   0:	00 00                	add    %al,(%rax)
+   2:	0f 84 3e 01 00 00    	je     0x146
+   8:	e8 4d 50 4b ff       	callq  0xff4b505a
+   d:	48 89 da             	mov    %rbx,%rdx
+  10:	48 b8 00 00 00 00 00 	movabs $0xdffffc0000000000,%rax
+  17:	fc ff df
+  1a:	48 c1 ea 03          	shr    $0x3,%rdx
+  1e:	80 3c 02 00          	cmpb   $0x0,(%rdx,%rax,1)
+  22:	0f 85 c7 01 00 00    	jne    0x1ef
+* 28:	4c 8b 23             	mov    (%rbx),%r12 <-- trapping instruction
+  2b:	4d 85 e4             	test   %r12,%r12
+  2e:	74 44                	je     0x74
+  30:	e8 25 50 4b ff       	callq  0xff4b505a
+  35:	be 04 00 00 00       	mov    $0x4,%esi
+  3a:	4c 89 e7             	mov    %r12,%rdi
+  3d:	41                   	rex.B
