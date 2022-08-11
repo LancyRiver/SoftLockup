@@ -1,0 +1,124 @@
+[   50.237882] audit: type=1400 audit(1660216226.924:8): avc:  denied  { execmem } for  pid=279 comm="CReproducer" scontext=system_u:system_r:kernel_t:s0 tcontext=system_u:system_r:kernel_t:s0 tclass=process permissive=1
+[   50.393209] hrtimer: interrupt took 18998 ns
+[   84.324400] rcu: INFO: rcu_preempt self-detected stall on CPU
+[   84.328131] rcu: 	0-....: (1 GPs behind) idle=281/1/0x4000000000000000 softirq=3685/3686 fqs=4614 
+[   84.331518] 	(t=21005 jiffies g=6453 q=103293 ncpus=2)
+[   84.333644] NMI backtrace for cpu 0
+[   84.335275] CPU: 0 PID: 3177 Comm: CReproducer Not tainted 5.19.0-rc8 #1
+[   84.337663] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.13.0-1ubuntu1.1 04/01/2014
+[   84.340983] Call Trace:
+[   84.342234]  <IRQ>
+[   84.343050]  dump_stack_lvl+0x4d/0x66
+[   84.345387]  nmi_cpu_backtrace.cold+0xd0/0xd5
+[   84.346993]  ? _raw_read_lock_bh+0x40/0x40
+[   84.348639]  ? lapic_can_unplug_cpu+0x80/0x80
+[   84.350444]  nmi_trigger_cpumask_backtrace+0x1a9/0x1e0
+[   84.352417]  rcu_dump_cpu_stacks+0x208/0x2f0
+[   84.354077]  rcu_sched_clock_irq.cold+0xce/0x746
+[   84.355840]  ? timekeeping_update+0x318/0x450
+[   84.357521]  ? _raw_spin_unlock_irqrestore+0x3d/0x80
+[   84.359306]  ? rcutree_dead_cpu+0x20/0x20
+[   84.360807]  ? do_settimeofday64+0x400/0x400
+[   84.362466]  ? _raw_spin_lock+0x82/0xe0
+[   84.363972]  ? tick_sched_handle.isra.0+0x150/0x150
+[   84.365913]  ? tick_sched_handle.isra.0+0x150/0x150
+[   84.367730]  update_process_times+0xfa/0x170
+[   84.369414]  tick_sched_handle.isra.0+0x105/0x150
+[   84.371266]  tick_sched_timer+0xda/0x110
+[   84.372686]  __hrtimer_run_queues+0x2e2/0x700
+[   84.374367]  ? enqueue_hrtimer+0x1f0/0x1f0
+[   84.375876]  ? kvm_clock_read+0x14/0x30
+[   84.377359]  ? ktime_get_update_offsets_now+0x17f/0x250
+[   84.379385]  hrtimer_interrupt+0x2f3/0x700
+[   84.380914]  __sysvec_apic_timer_interrupt+0x114/0x370
+[   84.383011]  sysvec_apic_timer_interrupt+0x3b/0xc0
+[   84.384784]  asm_sysvec_apic_timer_interrupt+0x16/0x20
+[   84.386633] RIP: 0010:rcu_core+0xc7f/0x1750
+[   84.388394] Code: b8 00 00 00 00 00 fc ff df 48 c1 ea 03 80 3c 02 00 0f 85 f2 09 00 00 49 8b 54 24 08 4c 89 c9 4c 89 e6 4c 89 ef e8 b1 06 ff ff <45> 84 ff 0f 84 f9 f5 ff ff e8 13 f8 fe ff e9 ef f5 ff ff fb e9 92
+[   84.395143] RSP: 0018:ffff88806d209e78 EFLAGS: 00010282
+[   84.397145] RAX: 0000000000000101 RBX: ffff88806d236b80 RCX: 0000000000000000
+[   84.399662] RDX: 0000000000000102 RSI: 0000000000000246 RDI: 0000000000000001
+[   84.402276] RBP: ffff88806d236bf8 R08: 0000000000035e80 R09: ffffed100da66db9
+[   84.404808] R10: ffff88806d336dc7 R11: ffffed100da66db8 R12: ffffffffa97d8d40
+[   84.407464] R13: 0000000000000001 R14: ffffffffa97d8d40 R15: 0000000000000000
+[   84.410231]  ? rcu_core+0xc7f/0x1750
+[   84.411630]  ? irq_exit_rcu+0x26/0x100
+[   84.413098]  ? sysvec_apic_timer_interrupt+0x40/0xc0
+[   84.414953]  ? asm_sysvec_apic_timer_interrupt+0x16/0x20
+[   84.416913]  ? rcu_note_context_switch+0x1750/0x1750
+[   84.418783]  ? rcu_core+0x1750/0x1750
+[   84.420157]  __do_softirq+0x1a5/0x58a
+[   84.421687]  irq_exit_rcu+0xc0/0x100
+[   84.423026]  sysvec_apic_timer_interrupt+0x8e/0xc0
+[   84.424788]  </IRQ>
+[   84.425585]  <TASK>
+[   84.426417]  asm_sysvec_apic_timer_interrupt+0x16/0x20
+[   84.428137] RIP: 0010:finish_task_switch+0x170/0x6d0
+[   84.429828] Code: 00 0f 85 96 04 00 00 49 8b 9c 24 c0 09 00 00 48 85 db 0f 85 d0 02 00 00 4c 89 e7 e8 ea 2e 80 02 fb 65 48 8b 1c 25 00 6d 02 00 <48> 8d bb 68 0a 00 00 48 b8 00 00 00 00 00 fc ff df 48 89 fa 48 c1
+[   84.436060] RSP: 0018:ffff88800e227be0 EFLAGS: 00000286
+[   84.438013] RAX: 0000000080000001 RBX: ffff88800df28f00 RCX: 0000000000000000
+[   84.440464] RDX: 0000000000000002 RSI: 0000000000000000 RDI: 0000000000000001
+[   84.443035] RBP: ffff88800e227c20 R08: 0000000000000001 R09: fffffbfff53afcdf
+[   84.445544] R10: ffffffffa9d7e6f3 R11: fffffbfff53afcde R12: ffff88806d235e80
+[   84.448060] R13: ffff8880011d4b00 R14: ffff888001a35680 R15: ffff88806d2367c0
+[   84.450637]  ? __switch_to+0x5c1/0xe10
+[   84.452160]  ? __switch_to_asm+0x42/0x70
+[   84.453749]  __schedule+0x88b/0x1b40
+[   84.455170]  ? __sched_text_start+0x8/0x8
+[   84.456665]  ? exclusive_event_installable+0x1a1/0x220
+[   84.458641]  ? __cond_resched+0x17/0x30
+[   84.459998]  preempt_schedule_common+0x4a/0xd0
+[   84.461661]  __cond_resched+0x17/0x30
+[   84.463071]  mutex_lock+0x64/0xe0
+[   84.464514]  ? __mutex_lock_slowpath+0x10/0x10
+[   84.466230]  ? __mutex_unlock_slowpath.isra.0+0x2c0/0x2c0
+[   84.468224]  __do_sys_perf_event_open+0x1693/0x23e0
+[   84.470126]  ? perf_compat_ioctl+0x70/0x70
+[   84.471630]  ? kasan_unpoison+0x23/0x50
+[   84.473233]  ? fpregs_assert_state_consistent+0x7c/0xc0
+[   84.475239]  ? exit_to_user_mode_prepare+0x36/0x130
+[   84.477132]  do_syscall_64+0x3b/0x90
+[   84.478511]  entry_SYSCALL_64_after_hwframe+0x63/0xcd
+[   84.480406] RIP: 0033:0x7f8a2b78e469
+[   84.481917] Code: 00 f3 c3 66 2e 0f 1f 84 00 00 00 00 00 0f 1f 40 00 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 8b 0d ff 49 2b 00 f7 d8 64 89 01 48
+[   84.488290] RSP: 002b:00007ffd0f9af7b8 EFLAGS: 00000246 ORIG_RAX: 000000000000012a
+[   84.490850] RAX: ffffffffffffffda RBX: 0000000000000000 RCX: 00007f8a2b78e469
+[   84.493323] RDX: 0000000000000000 RSI: 0000000000000000 RDI: 0000000020000080
+[   84.495871] RBP: 00007ffd0f9af7d0 R08: 0000000000000000 R09: 00007ffd0f9af7d0
+[   84.498617] R10: 00000000ffffffff R11: 0000000000000246 R12: 0000565366200ce0
+[   84.501410] R13: 00007ffd0f9af8f0 R14: 0000000000000000 R15: 0000000000000000
+[   84.503873]  </TASK>
+[  147.336636] rcu: INFO: rcu_preempt self-detected stall on CPU
+[  147.340441] rcu: 	0-....: (1 GPs behind) idle=281/1/0x4000000000000000 softirq=3685/3686 fqs=16802 
+[  147.343748] 	(t=84019 jiffies g=6453 q=387786 ncpus=2)
+[  147.345781] NMI backtrace for cpu 0
+[  147.347187] CPU: 0 PID: 3177 Comm: CReproducer Not tainted 5.19.0-rc8 #1
+[  147.349233] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.13.0-1ubuntu1.1 04/01/2014
+[  147.352231] Call Trace:
+[  147.353436]  <IRQ>
+[  147.354199]  dump_stack_lvl+0x4d/0x66
+[  147.356279]  nmi_cpu_backtrace.cold+0xd0/0xd5
+[  147.357843]  ? _raw_read_lock_bh+0x40/0x40
+[  147.359589]  ? lapic_can_unplug_cpu+0x80/0x80
+[  147.361297]  nmi_trigger_cpumask_backtrace+0x1a9/0x1e0
+[  147.363066]  rcu_dump_cpu_stacks+0x208/0x2f0
+[  147.364404]  rcu_sched_clock_irq.cold+0xce/0x746
+[  147.365735]  ? timekeeping_update+0x318/0x450
+[  147.367010]  ? _raw_spin_unlock_irqrestore+0x3d/0x80
+[  147.368415]  ? rcutree_dead_cpu+0x20/0x20
+[  147.369527]  ? do_settimeofday64+0x400/0x400
+[  147.370589]  ? _raw_spin_lock+0x82/0xe0
+[  147.371741]  ? tick_sched_handle.isra.0+0x150/0x150
+[  147.373337]  ? tick_sched_handle.isra.0+0x150/0x150
+[  147.374885]  update_process_times+0xfa/0x170
+[  147.376343]  tick_sched_handle.isra.0+0x105/0x150
+[  147.377924]  tick_sched_timer+0xda/0x110
+[  147.379205]  __hrtimer_run_queues+0x2e2/0x700
+[  147.380691]  ? enqueue_hrtimer+0x1f0/0x1f0
+[  147.382024]  ? kvm_clock_read+0x14/0x30
+[  147.383321]  ? ktime_get_update_offsets_now+0x17f/0x250
+[  147.385055]  hrtimer_interrupt+0x2f3/0x700
+[  147.386383]  __sysvec_apic_timer_interrupt+0x114/0x370
+[  147.388416]  sysvec_apic_timer_interrupt+0x89/0xc0
+[  147.390161]  </IRQ>
+[  147.390904]  <TASK>
