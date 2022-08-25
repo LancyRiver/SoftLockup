@@ -1,0 +1,353 @@
+[   65.129421] audit: type=1400 audit(1661428172.369:15): avc:  denied  { execmem } for  pid=360 comm="CReproducerRcu" scontext=unconfined_u:unconfined_r:unconfined_t:s0-s0:c0.c1023 tcontext=unconfined_u:unconfined_r:unconfined_t:s0-s0:c0.c1023 tclass=process permissive=1
+[   79.840127] hrtimer: interrupt took 14052 ns
+[  104.359596] rcu: INFO: rcu_sched self-detected stall on CPU
+[  104.368030] rcu: 	0-....: (20995 ticks this GP) idle=eee/1/0x4000000000000004 softirq=3077/3077 fqs=4694 
+[  104.373374] 	(t=21000 jiffies g=4473 q=220481)
+[  104.375926] NMI backtrace for cpu 0
+[  104.378133] CPU: 0 PID: 12886 Comm: CReproducerRcu Not tainted 5.4.192 #1
+[  104.381887] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.13.0-1ubuntu1.1 04/01/2014
+[  104.387042] Call Trace:
+[  104.388557]  <IRQ>
+[  104.390225]  dump_stack+0x95/0xc8
+[  104.392112]  nmi_cpu_backtrace.cold+0x55/0x94
+[  104.394758]  ? lapic_can_unplug_cpu+0x70/0x70
+[  104.397442]  nmi_trigger_cpumask_backtrace+0x15a/0x1b0
+[  104.400354]  rcu_dump_cpu_stacks+0x15d/0x1a7
+[  104.402749]  rcu_sched_clock_irq.cold+0x4c8/0x90b
+[  104.405510]  ? hrtimer_run_queues+0x1d/0x310
+[  104.407876]  update_process_times+0x24/0x60
+[  104.410279]  tick_sched_handle+0x10f/0x150
+[  104.412622]  tick_sched_timer+0x41/0x120
+[  104.414804]  __hrtimer_run_queues+0x308/0x7c0
+[  104.417218]  ? tick_sched_do_timer+0x160/0x160
+[  104.419750]  ? enqueue_hrtimer+0x230/0x230
+[  104.422074]  ? kvm_clock_get_cycles+0xd/0x10
+[  104.424437]  ? ktime_get_update_offsets_now+0x17d/0x250
+[  104.427363]  hrtimer_interrupt+0x2c9/0x6c0
+[  104.429693]  smp_apic_timer_interrupt+0xd4/0x380
+[  104.432226]  apic_timer_interrupt+0xf/0x20
+[  104.434517] RIP: 0010:clocksource_watchdog+0xa/0x8b0
+[  104.437264] Code: 48 c7 c7 48 ed 37 bd e8 34 11 2e 00 e9 74 ff ff ff 66 66 2e 0f 1f 84 00 00 00 00 00 0f 1f 40 00 41 57 41 56 41 55 41 54 55 53 <48> 83 ec 50 e8 9d 30 0b 00 48 c7 c7 40 7d ca bd e8 91 e5 22 02 8b
+[  104.447427] RSP: 0018:ffff88806d209d88 EFLAGS: 00000206 ORIG_RAX: ffffffffffffff13
+[  104.451622] RAX: ffffffffb9e945c0 RBX: ffff88806d209e80 RCX: ffffffffb9e7fe19
+[  104.455952] RDX: 0000000000000100 RSI: ffffffffb9e945c0 RDI: ffffffffbdca7d80
+[  104.460191] RBP: 0000000000000100 R08: 0000000000000001 R09: ffffed100da45aae
+[  104.464058] R10: ffffed100da45aad R11: ffff88806d22d56f R12: ffffffffbdca7d80
+[  104.467990] R13: 00000000fffcaa29 R14: 00000000fffcaa29 R15: ffff88806d22d540
+[  104.471933]  ? apic_timer_interrupt+0xa/0x20
+[  104.474346]  ? __clocksource_unstable+0x170/0x170
+[  104.476956]  ? call_timer_fn+0x39/0x2b0
+[  104.479082]  ? __clocksource_unstable+0x170/0x170
+[  104.481732]  call_timer_fn+0x45/0x2b0
+[  104.483781]  ? __clocksource_unstable+0x170/0x170
+[  104.486381]  ? __clocksource_unstable+0x170/0x170
+[  104.488998]  run_timer_softirq+0x53b/0x1230
+[  104.491289]  ? call_timer_fn+0x2b0/0x2b0
+[  104.493461]  ? apic_timer_interrupt+0xa/0x20
+[  104.495802]  __do_softirq+0x17c/0x627
+[  104.497954]  irq_exit+0x114/0x140
+[  104.499798]  smp_apic_timer_interrupt+0xde/0x380
+[  104.502340]  apic_timer_interrupt+0xf/0x20
+[  104.504607]  </IRQ>
+[  104.505791] RIP: 0010:generic_exec_single+0x1b6/0x2a0
+[  104.508551] Code: 03 0f b6 14 02 4c 89 e0 83 e0 07 83 c0 03 38 d0 7c 04 84 d2 75 2f c7 45 18 00 00 00 00 9c 5d fa 4c 89 f7 e8 3c fb 53 02 55 9d <45> 31 ed e9 78 ff ff ff e8 4d 5f 08 00 0f 0b eb b0 4c 89 e7 e8 a1
+[  104.518696] RSP: 0018:ffff88805d08fb08 EFLAGS: 00000246 ORIG_RAX: ffffffffffffff13
+[  104.522858] RAX: ffff88805a4627c0 RBX: ffffffffb9ff6b70 RCX: ffffffffb9ec1714
+[  104.526746] RDX: 0000000000000000 RSI: 1ffff1100ba11ee4 RDI: ffff8880683dcc08
+[  104.530640] RBP: 0000000000000246 R08: ffffffffbdc58018 R09: ffffffffbdc5800f
+[  104.534552] R10: ffffffffbdc58017 R11: ffffffffbdc5801b R12: ffff88805d08fb98
+[  104.538484] R13: 0000000000000000 R14: ffff88805d08fc40 R15: ffff88805d08fc40
+[  104.542500]  ? sw_perf_event_destroy+0x110/0x110
+[  104.545050]  ? generic_exec_single+0x1b4/0x2a0
+[  104.547511]  ? sw_perf_event_destroy+0x110/0x110
+[  104.550045]  smp_call_function_single+0x249/0x300
+[  104.552613]  ? generic_exec_single+0x2a0/0x2a0
+[  104.555262]  ? kmem_cache_alloc+0xc4/0x1e0
+[  104.557753]  ? selinux_file_alloc_security+0xc/0x160
+[  104.560522]  ? __perf_event_enable+0x550/0x550
+[  104.562972]  task_function_call+0xce/0x140
+[  104.565298]  ? perf_event_addr_filters_exec+0x300/0x300
+[  104.568203]  ? alloc_empty_file+0xa5/0x120
+[  104.570494]  ? __perf_event_enable+0x550/0x550
+[  104.572941]  ? alloc_file+0x2de/0x480
+[  104.574973]  ? exclusive_event_installable+0x1a1/0x220
+[  104.577790]  perf_install_in_context+0x1b9/0x360
+[  104.580347]  ? perf_group_attach+0x380/0x380
+[  104.582697]  ? mutex_lock+0x89/0xd0
+[  104.584652]  ? __mutex_lock_slowpath+0x10/0x10
+[  104.587079]  ? exclusive_event_installable+0x1a1/0x220
+[  104.589911]  __do_sys_perf_event_open+0x152d/0x2160
+[  104.592657]  ? simple_xattr_set+0x5a0/0x5a0
+[  104.594959]  ? kasan_unpoison_shadow+0x33/0x40
+[  104.597409]  ? perf_event_set_output+0x470/0x470
+[  104.599924]  ? listxattr+0xcc/0x120
+[  104.601883]  do_syscall_64+0x9a/0x330
+[  104.603906]  ? prepare_exit_to_usermode+0x142/0x1d0
+[  104.606599]  entry_SYSCALL_64_after_hwframe+0x44/0xa9
+[  104.609420] RIP: 0033:0x7f36bebb5469
+[  104.611411] Code: 00 f3 c3 66 2e 0f 1f 84 00 00 00 00 00 0f 1f 40 00 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 8b 0d ff 49 2b 00 f7 d8 64 89 01 48
+[  104.621550] RSP: 002b:00007ffdb4106348 EFLAGS: 00000246 ORIG_RAX: 000000000000012a
+[  104.625677] RAX: ffffffffffffffda RBX: 0000000000000000 RCX: 00007f36bebb5469
+[  104.629567] RDX: 0000000000000000 RSI: 0000000000000000 RDI: 0000000020000080
+[  104.633461] RBP: 00007ffdb4106360 R08: 0000000000000000 R09: 00007ffdb4106360
+[  104.637369] R10: 00000000ffffffff R11: 0000000000000246 R12: 00005570a2e49ce0
+[  104.641267] R13: 00007ffdb4106480 R14: 0000000000000000 R15: 0000000000000000
+[  125.746167] rcu: INFO: rcu_sched self-detected stall on CPU
+[  125.760379] rcu: 	0-....: (41995 ticks this GP) idle=ef2/1/0x4000000000000004 softirq=3077/3079 fqs=4906 
+[  125.766003] 	(t=21000 jiffies g=4477 q=447192)
+[  125.768816] NMI backtrace for cpu 0
+[  125.771927] CPU: 0 PID: 27350 Comm: CReproducerRcu Not tainted 5.4.192 #1
+[  125.775799] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.13.0-1ubuntu1.1 04/01/2014
+[  125.781124] Call Trace:
+[  125.782582]  <IRQ>
+[  125.784062]  dump_stack+0x95/0xc8
+[  125.786043]  nmi_cpu_backtrace.cold+0x55/0x94
+[  125.788674]  ? lapic_can_unplug_cpu+0x70/0x70
+[  125.791289]  nmi_trigger_cpumask_backtrace+0x15a/0x1b0
+[  125.794323]  rcu_dump_cpu_stacks+0x15d/0x1a7
+[  125.796769]  rcu_sched_clock_irq.cold+0x4c8/0x90b
+[  125.799482]  ? hrtimer_run_queues+0x1d/0x310
+[  125.801884]  update_process_times+0x24/0x60
+[  125.804276]  tick_sched_handle+0x10f/0x150
+[  125.806622]  tick_sched_timer+0x41/0x120
+[  125.808829]  __hrtimer_run_queues+0x308/0x7c0
+[  125.811254]  ? tick_sched_do_timer+0x160/0x160
+[  125.813734]  ? enqueue_hrtimer+0x230/0x230
+[  125.816080]  ? kvm_clock_get_cycles+0xd/0x10
+[  125.818492]  ? ktime_get_update_offsets_now+0x17d/0x250
+[  125.821393]  hrtimer_interrupt+0x2c9/0x6c0
+[  125.823717]  smp_apic_timer_interrupt+0xd4/0x380
+[  125.826324]  apic_timer_interrupt+0xf/0x20
+[  125.828617] RIP: 0010:clocksource_watchdog+0x19e/0x8b0
+[  125.831568] Code: 48 89 44 24 08 48 89 f8 48 c1 e8 03 42 80 3c 38 00 0f 85 e6 05 00 00 48 8b 07 e8 dd ca 56 02 49 89 c4 fb 4c 8b 35 82 36 e1 03 <49> 8d 7e 08 48 89 f8 48 c1 e8 03 42 80 3c 38 00 0f 85 d1 05 00 00
+[  125.841811] RSP: 0018:ffff88806d209d38 EFLAGS: 00000282 ORIG_RAX: ffffffffffffff13
+[  125.846018] RAX: 00000018ce99beee RBX: 0000000000000000 RCX: 0000000000000006
+[  125.849974] RDX: 0000000002bbd61c RSI: 0000000000000000 RDI: 0000000000000001
+[  125.853907] RBP: ffffffffbce5f400 R08: ffffffffbdc58018 R09: ffffffffbdc5800f
+[  125.857841] R10: ffffffffbdc58017 R11: ffffffffbdc5801b R12: 00000018ce99beee
+[  125.861781] R13: 0000000000000000 R14: ffffffffbce852c0 R15: dffffc0000000000
+[  125.865732]  ? apic_timer_interrupt+0xa/0x20
+[  125.868125]  ? clocksource_watchdog+0x193/0x8b0
+[  125.870660]  ? __clocksource_unstable+0x170/0x170
+[  125.873267]  call_timer_fn+0x45/0x2b0
+[  125.875319]  ? __clocksource_unstable+0x170/0x170
+[  125.877954]  ? __clocksource_unstable+0x170/0x170
+[  125.880584]  run_timer_softirq+0x53b/0x1230
+[  125.882924]  ? call_timer_fn+0x2b0/0x2b0
+[  125.885122]  ? apic_timer_interrupt+0xa/0x20
+[  125.887484]  __do_softirq+0x17c/0x627
+[  125.889651]  irq_exit+0x114/0x140
+[  125.891527]  smp_apic_timer_interrupt+0xde/0x380
+[  125.894101]  apic_timer_interrupt+0xf/0x20
+[  125.896380]  </IRQ>
+[  125.897587] RIP: 0010:generic_exec_single+0x1b6/0x2a0
+[  125.900387] Code: 03 0f b6 14 02 4c 89 e0 83 e0 07 83 c0 03 38 d0 7c 04 84 d2 75 2f c7 45 18 00 00 00 00 9c 5d fa 4c 89 f7 e8 3c fb 53 02 55 9d <45> 31 ed e9 78 ff ff ff e8 4d 5f 08 00 0f 0b eb b0 4c 89 e7 e8 a1
+[  125.910658] RSP: 0018:ffff88805e527b08 EFLAGS: 00000246 ORIG_RAX: ffffffffffffff13
+[  125.914814] RAX: ffff888057a4a7c0 RBX: ffffffffb9ff6b70 RCX: ffffffffb9ec1714
+[  125.918741] RDX: 0000000000000000 RSI: 1ffff1100bca4ee4 RDI: ffff88805795ca08
+[  125.922693] RBP: 0000000000000246 R08: ffffffffbdc58018 R09: ffffffffbdc5800f
+[  125.926614] R10: ffffffffbdc58017 R11: ffffffffbdc5801b R12: ffff88805e527b98
+[  125.930534] R13: 0000000000000000 R14: ffff88805e527c40 R15: ffff88805e527c40
+[  125.934575]  ? sw_perf_event_destroy+0x110/0x110
+[  125.937202]  ? generic_exec_single+0x1b4/0x2a0
+[  125.939694]  ? sw_perf_event_destroy+0x110/0x110
+[  125.942266]  smp_call_function_single+0x249/0x300
+[  125.944878]  ? generic_exec_single+0x2a0/0x2a0
+[  125.947431]  ? kmem_cache_alloc+0xc4/0x1e0
+[  125.949877]  ? selinux_file_alloc_security+0xc/0x160
+[  125.952643]  ? __perf_event_enable+0x550/0x550
+[  125.955112]  task_function_call+0xce/0x140
+[  125.957421]  ? perf_event_addr_filters_exec+0x300/0x300
+[  125.960331]  ? alloc_empty_file+0xa5/0x120
+[  125.962630]  ? __perf_event_enable+0x550/0x550
+[  125.965099]  ? alloc_file+0x2de/0x480
+[  125.967127]  ? exclusive_event_installable+0x1a1/0x220
+[  125.969981]  perf_install_in_context+0x1b9/0x360
+[  125.972553]  ? perf_group_attach+0x380/0x380
+[  125.974919]  ? mutex_lock+0x89/0xd0
+[  125.976859]  ? __mutex_lock_slowpath+0x10/0x10
+[  125.979305]  ? exclusive_event_installable+0x1a1/0x220
+[  125.982119]  __do_sys_perf_event_open+0x152d/0x2160
+[  125.984928]  ? simple_xattr_set+0x5a0/0x5a0
+[  125.987242]  ? kasan_unpoison_shadow+0x33/0x40
+[  125.989704]  ? perf_event_set_output+0x470/0x470
+[  125.992232]  ? listxattr+0xcc/0x120
+[  125.994203]  do_syscall_64+0x9a/0x330
+[  125.996267]  ? prepare_exit_to_usermode+0x142/0x1d0
+[  125.998990]  entry_SYSCALL_64_after_hwframe+0x44/0xa9
+[  126.001837] RIP: 0033:0x7f36bebb5469
+[  126.004954] Code: 00 f3 c3 66 2e 0f 1f 84 00 00 00 00 00 0f 1f 40 00 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 8b 0d ff 49 2b 00 f7 d8 64 89 01 48
+[  126.015161] RSP: 002b:00007ffdb4106348 EFLAGS: 00000246 ORIG_RAX: 000000000000012a
+[  126.019292] RAX: ffffffffffffffda RBX: 0000000000000000 RCX: 00007f36bebb5469
+[  126.023184] RDX: 0000000000000000 RSI: 0000000000000000 RDI: 0000000020000080
+[  126.027074] RBP: 00007ffdb4106360 R08: 0000000000000000 R09: 00007ffdb4106360
+[  126.030975] R10: 00000000ffffffff R11: 0000000000000246 R12: 00005570a2e49ce0
+[  126.034888] R13: 00007ffdb4106480 R14: 0000000000000000 R15: 0000000000000000
+[  188.749545] rcu: INFO: rcu_sched self-detected stall on CPU
+[  188.753108] rcu: 	0-....: (104691 ticks this GP) idle=ef2/1/0x4000000000000004 softirq=3077/3079 fqs=19434 
+[  188.758621] 	(t=84003 jiffies g=4477 q=1104495)
+[  188.761281] NMI backtrace for cpu 0
+[  188.763332] CPU: 0 PID: 27350 Comm: CReproducerRcu Not tainted 5.4.192 #1
+[  188.767111] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.13.0-1ubuntu1.1 04/01/2014
+[  188.772142] Call Trace:
+[  188.773569]  <IRQ>
+[  188.774982]  dump_stack+0x95/0xc8
+[  188.776908]  nmi_cpu_backtrace.cold+0x55/0x94
+[  188.779433]  ? lapic_can_unplug_cpu+0x70/0x70
+[  188.781940]  nmi_trigger_cpumask_backtrace+0x15a/0x1b0
+[  188.784821]  rcu_dump_cpu_stacks+0x15d/0x1a7
+[  188.787229]  rcu_sched_clock_irq.cold+0x4c8/0x90b
+[  188.789983]  ? hrtimer_run_queues+0x1d/0x310
+[  188.792375]  update_process_times+0x24/0x60
+[  188.794744]  tick_sched_handle+0x10f/0x150
+[  188.797079]  tick_sched_timer+0x41/0x120
+[  188.799263]  __hrtimer_run_queues+0x308/0x7c0
+[  188.801689]  ? tick_sched_do_timer+0x160/0x160
+[  188.804151]  ? enqueue_hrtimer+0x230/0x230
+[  188.806466]  ? kvm_clock_get_cycles+0xd/0x10
+[  188.808850]  ? ktime_get_update_offsets_now+0x17d/0x250
+[  188.811739]  hrtimer_interrupt+0x2c9/0x6c0
+[  188.814103]  smp_apic_timer_interrupt+0xd4/0x380
+[  188.816671]  apic_timer_interrupt+0xf/0x20
+[  188.818935] RIP: 0010:clocksource_watchdog+0x19e/0x8b0
+[  188.821731] Code: 48 89 44 24 08 48 89 f8 48 c1 e8 03 42 80 3c 38 00 0f 85 e6 05 00 00 48 8b 07 e8 dd ca 56 02 49 89 c4 fb 4c 8b 35 82 36 e1 03 <49> 8d 7e 08 48 89 f8 48 c1 e8 03 42 80 3c 38 00 0f 85 d1 05 00 00
+[  188.829635] RSP: 0018:ffff88806d209d38 EFLAGS: 00000282 ORIG_RAX: ffffffffffffff13
+[  188.832901] RAX: 00000018ce99beee RBX: 0000000000000000 RCX: 0000000000000006
+[  188.835877] RDX: 0000000002bbd61c RSI: 0000000000000000 RDI: 0000000000000001
+[  188.838845] RBP: ffffffffbce5f400 R08: ffffffffbdc58018 R09: ffffffffbdc5800f
+[  188.841749] R10: ffffffffbdc58017 R11: ffffffffbdc5801b R12: 00000018ce99beee
+[  188.844578] R13: 0000000000000000 R14: ffffffffbce852c0 R15: dffffc0000000000
+[  188.847399]  ? apic_timer_interrupt+0xa/0x20
+[  188.849221]  ? clocksource_watchdog+0x193/0x8b0
+[  188.851147]  ? __clocksource_unstable+0x170/0x170
+[  188.853086]  call_timer_fn+0x45/0x2b0
+[  188.854556]  ? __clocksource_unstable+0x170/0x170
+[  188.856570]  ? __clocksource_unstable+0x170/0x170
+[  188.858433]  run_timer_softirq+0x53b/0x1230
+[  188.860202]  ? call_timer_fn+0x2b0/0x2b0
+[  188.861904]  ? apic_timer_interrupt+0xa/0x20
+[  188.863760]  __do_softirq+0x17c/0x627
+[  188.865449]  irq_exit+0x114/0x140
+[  188.866879]  smp_apic_timer_interrupt+0xde/0x380
+[  188.868802]  apic_timer_interrupt+0xf/0x20
+[  188.870538]  </IRQ>
+[  188.871401] RIP: 0010:generic_exec_single+0x1b6/0x2a0
+[  188.873455] Code: 03 0f b6 14 02 4c 89 e0 83 e0 07 83 c0 03 38 d0 7c 04 84 d2 75 2f c7 45 18 00 00 00 00 9c 5d fa 4c 89 f7 e8 3c fb 53 02 55 9d <45> 31 ed e9 78 ff ff ff e8 4d 5f 08 00 0f 0b eb b0 4c 89 e7 e8 a1
+[  188.881193] RSP: 0018:ffff88805e527b08 EFLAGS: 00000246 ORIG_RAX: ffffffffffffff13
+[  188.884361] RAX: ffff888057a4a7c0 RBX: ffffffffb9ff6b70 RCX: ffffffffb9ec1714
+[  188.887409] RDX: 0000000000000000 RSI: 1ffff1100bca4ee4 RDI: ffff88805795ca08
+[  188.890396] RBP: 0000000000000246 R08: ffffffffbdc58018 R09: ffffffffbdc5800f
+[  188.893264] R10: ffffffffbdc58017 R11: ffffffffbdc5801b R12: ffff88805e527b98
+[  188.896330] R13: 0000000000000000 R14: ffff88805e527c40 R15: ffff88805e527c40
+[  188.899300]  ? sw_perf_event_destroy+0x110/0x110
+[  188.901272]  ? generic_exec_single+0x1b4/0x2a0
+[  188.903159]  ? sw_perf_event_destroy+0x110/0x110
+[  188.905110]  smp_call_function_single+0x249/0x300
+[  188.907089]  ? generic_exec_single+0x2a0/0x2a0
+[  188.908928]  ? kmem_cache_alloc+0xc4/0x1e0
+[  188.910757]  ? selinux_file_alloc_security+0xc/0x160
+[  188.912756]  ? __perf_event_enable+0x550/0x550
+[  188.914675]  task_function_call+0xce/0x140
+[  188.916447]  ? perf_event_addr_filters_exec+0x300/0x300
+[  188.918652]  ? alloc_empty_file+0xa5/0x120
+[  188.920422]  ? __perf_event_enable+0x550/0x550
+[  188.922358]  ? alloc_file+0x2de/0x480
+[  188.923949]  ? exclusive_event_installable+0x1a1/0x220
+[  188.926121]  perf_install_in_context+0x1b9/0x360
+[  188.928124]  ? perf_group_attach+0x380/0x380
+[  188.929907]  ? mutex_lock+0x89/0xd0
+[  188.931374]  ? __mutex_lock_slowpath+0x10/0x10
+[  188.933235]  ? exclusive_event_installable+0x1a1/0x220
+[  188.935392]  __do_sys_perf_event_open+0x152d/0x2160
+[  188.937424]  ? simple_xattr_set+0x5a0/0x5a0
+[  188.939195]  ? kasan_unpoison_shadow+0x33/0x40
+[  188.941059]  ? perf_event_set_output+0x470/0x470
+[  188.943002]  ? listxattr+0xcc/0x120
+[  188.944538]  do_syscall_64+0x9a/0x330
+[  188.946040]  ? prepare_exit_to_usermode+0x142/0x1d0
+[  188.948029]  entry_SYSCALL_64_after_hwframe+0x44/0xa9
+[  188.950147] RIP: 0033:0x7f36bebb5469
+[  188.951678] Code: 00 f3 c3 66 2e 0f 1f 84 00 00 00 00 00 0f 1f 40 00 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 8b 0d ff 49 2b 00 f7 d8 64 89 01 48
+[  188.959407] RSP: 002b:00007ffdb4106348 EFLAGS: 00000246 ORIG_RAX: 000000000000012a
+[  188.962521] RAX: ffffffffffffffda RBX: 0000000000000000 RCX: 00007f36bebb5469
+[  188.965419] RDX: 0000000000000000 RSI: 0000000000000000 RDI: 0000000020000080
+[  188.968550] RBP: 00007ffdb4106360 R08: 0000000000000000 R09: 00007ffdb4106360
+[  188.971519] R10: 00000000ffffffff R11: 0000000000000246 R12: 00005570a2e49ce0
+[  188.974558] R13: 00007ffdb4106480 R14: 0000000000000000 R15: 0000000000000000
+[  188.979642] ------------[ cut here ]------------
+[  188.981616] NETDEV WATCHDOG: eth0 (e1000): transmit queue 0 timed out
+[  188.985042] WARNING: CPU: 0 PID: 27350 at net/sched/sch_generic.c:472 dev_watchdog+0x95d/0xab0
+[  188.988766] Modules linked in:
+[  188.990105] CPU: 0 PID: 27350 Comm: CReproducerRcu Not tainted 5.4.192 #1
+[  188.992942] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.13.0-1ubuntu1.1 04/01/2014
+[  188.996663] RIP: 0010:dev_watchdog+0x95d/0xab0
+[  188.998492] Code: fe 4c 8b 7c 24 28 c6 05 21 a4 b4 01 01 4c 89 ff e8 e8 65 f3 ff 44 89 e1 4c 89 fe 48 c7 c7 00 69 9d bc 48 89 c2 e8 da 8a 7d 00 <0f> 0b e9 e5 fd ff ff 48 c7 44 24 10 80 a9 e0 bc e9 a3 fc ff ff 48
+[  189.006078] RSP: 0018:ffff88806d209d40 EFLAGS: 00010282
+[  189.008285] RAX: 0000000000000000 RBX: ffff888069e1c440 RCX: 0000000000000000
+[  189.011310] RDX: 0000000000000100 RSI: 0000000000000008 RDI: ffffed100da4139a
+[  189.014322] RBP: dffffc0000000000 R08: 0000000000000001 R09: ffffed100da45297
+[  189.017315] R10: ffffed100da45296 R11: ffff88806d2294b7 R12: 0000000000000000
+[  189.020246] R13: ffff88806ada6400 R14: 0000000000000001 R15: ffff888069e1c000
+[  189.023191] FS:  00007f36bf08e440(0000) GS:ffff88806d200000(0000) knlGS:0000000000000000
+[  189.026609] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[  189.029028] CR2: 00007f36beb604d0 CR3: 0000000056750000 CR4: 00000000000006f0
+[  189.032101] DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+[  189.035132] DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+[  189.038068] Call Trace:
+[  189.039181]  <IRQ>
+[  189.040175]  ? find_next_bit+0xc9/0xf0
+[  189.041777]  call_timer_fn+0x45/0x2b0
+[  189.043273]  ? netif_carrier_off+0x90/0x90
+[  189.045019]  ? netif_carrier_off+0x90/0x90
+[  189.046729]  run_timer_softirq+0x53b/0x1230
+[  189.048463]  ? call_timer_fn+0x2b0/0x2b0
+[  189.050097]  ? apic_timer_interrupt+0xa/0x20
+[  189.051887]  __do_softirq+0x17c/0x627
+[  189.053393]  irq_exit+0x114/0x140
+[  189.054828]  smp_apic_timer_interrupt+0xde/0x380
+[  189.056761]  apic_timer_interrupt+0xf/0x20
+[  189.058495]  </IRQ>
+[  189.059512] RIP: 0010:generic_exec_single+0x1b6/0x2a0
+[  189.061681] Code: 03 0f b6 14 02 4c 89 e0 83 e0 07 83 c0 03 38 d0 7c 04 84 d2 75 2f c7 45 18 00 00 00 00 9c 5d fa 4c 89 f7 e8 3c fb 53 02 55 9d <45> 31 ed e9 78 ff ff ff e8 4d 5f 08 00 0f 0b eb b0 4c 89 e7 e8 a1
+[  189.069363] RSP: 0018:ffff88805e527b08 EFLAGS: 00000246 ORIG_RAX: ffffffffffffff13
+[  189.072530] RAX: ffff888057a4a7c0 RBX: ffffffffb9ff6b70 RCX: ffffffffb9ec1714
+[  189.075418] RDX: 0000000000000000 RSI: 1ffff1100bca4ee4 RDI: ffff88805795ca08
+[  189.078374] RBP: 0000000000000246 R08: ffffffffbdc58018 R09: ffffffffbdc5800f
+[  189.081361] R10: ffffffffbdc58017 R11: ffffffffbdc5801b R12: ffff88805e527b98
+[  189.084271] R13: 0000000000000000 R14: ffff88805e527c40 R15: ffff88805e527c40
+[  189.087319]  ? sw_perf_event_destroy+0x110/0x110
+[  189.089290]  ? generic_exec_single+0x1b4/0x2a0
+[  189.091120]  ? sw_perf_event_destroy+0x110/0x110
+[  189.093033]  smp_call_function_single+0x249/0x300
+[  189.095001]  ? generic_exec_single+0x2a0/0x2a0
+[  189.096893]  ? kmem_cache_alloc+0xc4/0x1e0
+[  189.098777]  ? selinux_file_alloc_security+0xc/0x160
+[  189.101435]  ? __perf_event_enable+0x550/0x550
+[  189.103350]  task_function_call+0xce/0x140
+[  189.105186]  ? perf_event_addr_filters_exec+0x300/0x300
+[  189.107337]  ? alloc_empty_file+0xa5/0x120
+[  189.109091]  ? __perf_event_enable+0x550/0x550
+[  189.110969]  ? alloc_file+0x2de/0x480
+[  189.112536]  ? exclusive_event_installable+0x1a1/0x220
+[  189.114752]  perf_install_in_context+0x1b9/0x360
+[  189.116738]  ? perf_group_attach+0x380/0x380
+[  189.119216]  ? mutex_lock+0x89/0xd0
+[  189.120721]  ? __mutex_lock_slowpath+0x10/0x10
+[  189.122603]  ? exclusive_event_installable+0x1a1/0x220
+[  189.124819]  __do_sys_perf_event_open+0x152d/0x2160
+[  189.126908]  ? simple_xattr_set+0x5a0/0x5a0
+[  189.128696]  ? kasan_unpoison_shadow+0x33/0x40
+[  189.130560]  ? perf_event_set_output+0x470/0x470
+[  189.132532]  ? listxattr+0xcc/0x120
+[  189.134029]  do_syscall_64+0x9a/0x330
+[  189.135575]  ? prepare_exit_to_usermode+0x142/0x1d0
+[  189.137706]  entry_SYSCALL_64_after_hwframe+0x44/0xa9
+[  189.139879] RIP: 0033:0x7f36bebb5469
+[  189.141486] Code: 00 f3 c3 66 2e 0f 1f 84 00 00 00 00 00 0f 1f 40 00 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 8b 0d ff 49 2b 00 f7 d8 64 89 01 48
+[  189.149226] RSP: 002b:00007ffdb4106348 EFLAGS: 00000246 ORIG_RAX: 000000000000012a
+[  189.152386] RAX: ffffffffffffffda RBX: 0000000000000000 RCX: 00007f36bebb5469
+[  189.155593] RDX: 0000000000000000 RSI: 0000000000000000 RDI: 0000000020000080
+[  189.159596] RBP: 00007ffdb4106360 R08: 0000000000000000 R09: 00007ffdb4106360
+[  189.163661] R10: 00000000ffffffff R11: 0000000000000246 R12: 00005570a2e49ce0
+[  189.167725] R13: 00007ffdb4106480 R14: 0000000000000000 R15: 0000000000000000
+[  189.171805] ---[ end trace 90bba0223ffdd113 ]---
